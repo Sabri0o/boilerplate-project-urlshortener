@@ -3,14 +3,24 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-// connecting to database
+// body useNewUrlParserconst fs = require("fs");
+const bodyParser = require("body-parser");
+
+// Node module that provides URI validation functions to verify a submitted URL.
+const validUrl = require("valid-url");
+
+//A tiny (108 bytes), secure, URL-friendly, unique string ID generator for JavaScript
+const { nanoid } = require("nanoid");
+
+// connecting database
+const mySecret = process.env["MONGO_URI"];
+
 let mongoose;
 try {
   mongoose = require("mongoose");
 } catch (error) {
   console.log(error);
 }
-
 mongoose.connect(
   process.env.MONGO_URI,
   {
@@ -24,8 +34,12 @@ mongoose.connect(
     console.log("Database state is " + !!mongoose.connection.readyState);
   }
 );
+
 // Basic Configuration
 const port = process.env.PORT || 3000;
+// body parser middleware to handle the POST requests
+app.use(bodyParser.urlencoded({ extended: "false" }));
+app.use(bodyParser.json());
 
 app.use(cors());
 
