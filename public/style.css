@@ -3,7 +3,7 @@ body {
   font-size: 16px;
   color: #222;
   background-color: #fff;
-  text-align: center;
+  /* text-align: center; */
   line-height: 1.4em;
 }
 
@@ -16,7 +16,9 @@ h3 {
   margin-top: 30px;
 }
 
-
+h1 {
+  text-align: center;
+}
 
 .user-stories li {
   margin-bottom: 1em;
@@ -40,7 +42,15 @@ input {
   padding: 5px;
 }
 
-input[type='text'] {
+input[type="text"] {
   width: 220px;
   text-align: center;
+}
+
+footer {
+  text-align: center;
+}
+
+.notes{
+  padding: 15px;
 }

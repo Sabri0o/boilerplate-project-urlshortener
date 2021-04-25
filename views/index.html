@@ -1,19 +1,37 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
-    <title>URL Shortener Microservice | freeCodeCamp.org</title>
-    <link
-      rel="icon"
-      type="image/png"
-      href="https://cdn.freecodecamp.org/universal/favicons/favicon-16x16.png"
-    />
-    <link href="/public/style.css" rel="stylesheet" type="text/css" />
-  </head>
 
-  <body>
-    <h1>URL Shortener Microservice freeCodeCamp </h1>
-    <main>
+<head>
+  <title>URL Shortener Microservice | freeCodeCamp.org</title>
+  <link rel="icon" type="image/png" href="https://cdn.freecodecamp.org/universal/favicons/favicon-16x16.png" />
+  <link href="/public/style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <h1>URL Shortener Microservice freeCodeCamp project</h1>
+  <main>
+    <div class='notes'>
+      <b>Notes:
+      </b>
+      <ul>
+        <li>You can POST a URL to <mark>/api/shorturl</mark> and get a JSON response with original_url and short_url
+          properties.
+          Here's
+          an example: <mark>{ original_url : 'https://freeCodeCamp.org', short_url : 1}</mark></li>
+
+        <li> When you visit <mark>/api/shorturl/<short_url></short_url></mark>, you will be redirected to the original
+          URL.
+        </li>
+
+        <li> If you pass an invalid URL that doesn't follow the valid <mark>http://www.example.com</mark> format, the
+          JSON response
+          will
+          contain <mark>{ error: 'invalid url' }</mark></li>
+
+      </ul>
+    </div>
+    <div>
       <section>
         <form action="api/shorturl" method="POST">
           <fieldset>
@@ -24,9 +42,11 @@
           </fieldset>
         </form>
       </section>
-    </main>
-    <footer>
-      <p>By <a href="https://github.com/Sabri0o">Sabri Trabelsi</a></p>
-    </footer>
-  </body>
+    </div>
+  </main>
+  <footer>
+    <p>By <a href="https://github.com/Sabri0o">Sabri Trabelsi</a></p>
+  </footer>
+</body>
+
 </html>
