@@ -54,6 +54,76 @@ app.get("/api/hello", function (req, res) {
   res.json({ greeting: "hello API" });
 });
 
+// importing modal
+const UrlShortener = require("./dbSchema.js").UrlShortenerModel;
+
+////Build a simple function to check if the url is valid or it is already exists in the db
+
+var checkUrl = function (req, res, next) {
+  console.log(req.body);
+
+  const url = req.body["url"];
+
+  var pattern = /^(http|https)/;
+  var result = pattern.test(url);
+
+  if (validUrl.isUri(url) && result) {
+    console.log("Looks like an URI");
+    console.log("check if uri exists in db...");
+    UrlShortener.findOne({ original_url: url })
+      .then((thatUrl) => {
+        console.log("check this Url: ", thatUrl);
+        if (thatUrl) {
+          res.json({ original_url: url, short_url: thatUrl.short_url });
+          return;
+        } else {
+          console.log("proceeding registration...");
+          next();
+        }
+      })
+      .catch((err) => {
+        console.log("error: ", err);
+        res.json({ error: "Database error" });
+        return;
+      });
+  } else {
+    console.log("Not a URI");
+    res.json({ error: "invalid url" });
+    return;
+  }
+};
+
+app.post("/api/shorturl", checkUrl, function (req, res) {
+  var uri = req.body["url"];
+  var id = nanoid();
+  var shortUrl = new UrlShortener({
+    original_url: uri,
+    short_url: id,
+  });
+  shortUrl.save(function (err, data) {
+    if (err) console.log(err);
+    console.log("url saved succefully");
+
+    res.send({ original_url: uri, short_url: id });
+  });
+});
+
+// get short url
+
+app.get("/api/shorturl/:new?", function (req, res) {
+  console.log(req.params.new);
+  UrlShortener.findOne({ short_url: req.params.new })
+    .then((thaturl) => {
+      console.log(thaturl);
+      if (thaturl) {
+        res.redirect(thaturl.original_url);
+      } else {
+        res.json({ error: "No short URL found for the given input" });
+      }
+    })
+    .catch((err) => console.log(err));
+});
+
 app.listen(port, function () {
   console.log(`Listening on port ${port}`);
 });
